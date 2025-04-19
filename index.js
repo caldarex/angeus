@@ -3,13 +3,16 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "Solo POST supportato" });
   }
 
-  const { userInput } = req.body;
-
-  if (!userInput) {
-    return res.status(400).json({ error: "Input mancante" });
-  }
+  let userInput = "";
 
   try {
+    const body = await req.json(); // ⬅️ parsing automatico (Vercel 2024)
+    userInput = body.prompt;
+
+    if (!userInput) {
+      return res.status(400).json({ error: "Input mancante" });
+    }
+
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
       headers: {
@@ -21,7 +24,8 @@ export default async function handler(req, res) {
         messages: [
           { role: "system", content: "Sei Angeus, un assistente personale diretto e futuristico." },
           { role: "user", content: userInput }
-        ]
+        ],
+        temperature: 0.7
       })
     });
 
@@ -31,8 +35,9 @@ export default async function handler(req, res) {
       return res.status(response.status).json({ error: data.error.message || "Errore API" });
     }
 
-    res.status(200).json({ reply: data.choices[0].message.content });
-  } catch (err) {
-    res.status(500).json({ error: "Errore del server: " + err.message });
+    return res.status(200).json({ reply: data.choices[0].message.content });
+
+  } catch (error) {
+    return res.status(500).json({ error: "Errore interno", details: error.message });
   }
 }
