@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Angeus</title>
+  <style>
+    body {
+      background-color: #111;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+    textarea {
+      width: 80%;
+      max-width: 600px;
+      height: 100px;
+      margin-bottom: 1rem;
+      padding: 1rem;
+      font-size: 1rem;
+    }
+    button {
+      padding: 0.7rem 1.5rem;
+      font-size: 1rem;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 10px;
+    }
+    #response {
+      margin-top: 2rem;
+      max-width: 600px;
+      padding: 1rem;
+      background-color: #222;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Parla con Angeus</h1>
+  <textarea id="prompt" placeholder="Scrivi qualcosa..."></textarea>
+  <button onclick="sendMessage()">Invia</button>
+  <div id="response"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
